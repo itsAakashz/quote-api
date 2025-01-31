@@ -26,7 +26,11 @@ app.get('/', (req, res) => {
 app.get('/quotes/:category', (req, res) => {
     const category = req.params.category;
     const filteredQuotes = quotes.filter(quote => quote.category.toLowerCase() === category.toLowerCase());
-    res.json(filteredQuotes);
+    if (filteredQuotes.length === 0) {
+        res.json({ message: 'No quotes found in this category' });
+    } else {
+        res.json(filteredQuotes);
+    }
 });
 
 app.get('/quote', (req, res) => {
