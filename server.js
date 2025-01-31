@@ -14,9 +14,9 @@ fs.readFile('./quotes.json', 'utf8', (err, data) => {
     quotes = JSON.parse(data);
 });
 
-app.get('/quotes', (req, res) => {
-    res.json(quotes);
-});
+// app.get('/quotes', (req, res) => {
+//     res.json(quotes);
+// });
 
 app.get('/quotes/:category', (req, res) => {
     const category = req.params.category;
