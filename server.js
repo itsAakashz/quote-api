@@ -19,9 +19,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, './index.html'));
 });
 
-// app.get('/quotes', (req, res) => {
-//     res.json(quotes);
-// });
+//all quotes 
+app.get('/quotes', (req, res) => {
+    res.json(quotes);
+});
 
 app.get('/quotes/:category', (req, res) => {
     const category = req.params.category;
@@ -33,10 +34,23 @@ app.get('/quotes/:category', (req, res) => {
     }
 });
 
+//single quote
 app.get('/quote', (req, res) => {
     const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
     res.json(randomQuote);
 });
+
+app.get('/quote/:category', (req, res) => {
+    const category = req.params.category;
+    const filteredQuotes = quotes.filter(quote => quote.category.toLowerCase() === category.toLowerCase());
+    if (filteredQuotes.length === 0) {
+        res.json({ message:'No quotes found in category ' + category });
+    } else {
+        const randomQuote = filteredQuotes[Math.floor(Math.random() * filteredQuotes.length)];
+        res.json(randomQuote);
+    }
+});
+
 
 app.get('/categories', (req, res) => {
     const categories = quotes.map(quote => quote.category);
@@ -44,7 +58,7 @@ app.get('/categories', (req, res) => {
     res.json(uniqueCategories);
 });
 
-app.post('/quotes', (req, res) => {
+app.post('/post', (req, res) => {
     const newQuote = req.body;
     quotes.push(newQuote);
     fs.writeFile('./quotes.json', JSON.stringify(quotes, null, 2), (err) => {
