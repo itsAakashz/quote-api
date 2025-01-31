@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote of the Day</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #430b53;
+            margin: 0;
+        }
+        .quote-container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .quote {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .author {
+            font-size: 18px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="quote-container">
+        <div class="quote" id="quote"></div>
+        <div class="author" id="author"></div>
+    </div>
+    <script>
+        fetch('/quote')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('quote').textContent = `"${data.quote}"`;
+                document.getElementById('author').textContent = `- ${data.author}`;
+            })
+            .catch(error => console.error('Error fetching quote:', error));
+    </script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 const express = require('express');
 const fs = require('fs');
+const path = require('path')
 const app = express();
 const port = 3000;
 
@@ -12,6 +13,10 @@ fs.readFile('./quotes.json', 'utf8', (err, data) => {
         return;
     }
     quotes = JSON.parse(data);
+});
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, './index.html'));
 });
 
 // app.get('/quotes', (req, res) => {
